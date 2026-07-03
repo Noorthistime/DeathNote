@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Notebook Outline (Crisp White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,24 h36 v60 h-36 v-60 M38,26 v56 h32 v-56 h-32"
+        android:fillType="evenOdd" />
+
+    <!-- Glowing Red Accent (Vertical Stripe) -->
+    <path
+        android:fillColor="#FF0000"
+        android:pathData="M38,26 h4 v56 h-4 z" />
+
+    <!-- Typography 'D' (Crisp White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,46 v16 h4 c6,0 6,-16 0,-16 h-4 z M48,48 v12 h2 c3,0 3,-12 0,-12 h-2 z"
+        android:fillType="evenOdd" />
+
+    <!-- Structured Note Lines -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M56,48 h10 v1 h-10 z
+                          M56,53 h10 v1 h-10 z
+                          M56,58 h10 v1 h-10 z" />
+</vector>
