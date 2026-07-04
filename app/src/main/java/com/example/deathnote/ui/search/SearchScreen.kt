@@ -71,8 +71,8 @@ fun SearchScreen(
                     unfocusedContainerColor = NoirSurface,
                     focusedContainerColor = NoirSurface,
                     unfocusedBorderColor = Color.Transparent,
-                    focusedBorderColor = NoirPrimary,
-                    cursorColor = NoirPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    cursorColor = MaterialTheme.colorScheme.primary,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White
                 ),
@@ -186,7 +186,7 @@ fun SearchFilterChip(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (selected) {
-                Box(modifier = Modifier.size(6.dp).background(NoirPrimary, CircleShape))
+                Box(modifier = Modifier.size(6.dp).background(MaterialTheme.colorScheme.primary, CircleShape))
                 Spacer(modifier = Modifier.width(8.dp))
             }
             Text(label, style = MaterialTheme.typography.labelSmall)
@@ -197,7 +197,7 @@ fun SearchFilterChip(
 @Composable
 fun SectionHeader(title: String, matches: Int) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(modifier = Modifier.width(2.dp).height(16.dp).background(NoirPrimary))
+        Box(modifier = Modifier.width(2.dp).height(16.dp).background(MaterialTheme.colorScheme.primary))
         Spacer(modifier = Modifier.width(8.dp))
         Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.weight(1f))

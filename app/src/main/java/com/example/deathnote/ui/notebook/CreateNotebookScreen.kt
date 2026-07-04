@@ -84,7 +84,7 @@ fun CreateNotebookScreen(
                     unfocusedContainerColor = Color.Transparent,
                     focusedContainerColor = Color.Transparent,
                     unfocusedBorderColor = NoirTextSecondary.copy(alpha = 0.3f),
-                    focusedBorderColor = NoirPrimary
+                    focusedBorderColor = MaterialTheme.colorScheme.primary
                 )
             )
 
@@ -114,7 +114,7 @@ fun CreateNotebookScreen(
                         unfocusedContainerColor = Color.Transparent,
                         focusedContainerColor = Color.Transparent,
                         unfocusedBorderColor = NoirTextSecondary.copy(alpha = 0.3f),
-                        focusedBorderColor = NoirPrimary
+                        focusedBorderColor = MaterialTheme.colorScheme.primary
                     )
                 )
             }
@@ -177,7 +177,7 @@ fun ToggleOption(
                     .border(1.dp, NoirTextSecondary.copy(alpha = 0.2f), MaterialTheme.shapes.small),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(icon, contentDescription = null, tint = if (isActive) NoirPrimary else Color.White)
+                Icon(icon, contentDescription = null, tint = if (isActive) MaterialTheme.colorScheme.primary else Color.White)
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {

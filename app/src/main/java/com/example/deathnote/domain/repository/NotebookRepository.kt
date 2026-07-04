@@ -23,4 +23,11 @@ interface NotebookRepository {
     suspend fun getPageById(pageId: String): Page?
     suspend fun searchNotebooks(query: String): List<Notebook>
     suspend fun searchPages(query: String): List<Page>
+    
+    // Sync methods
+    suspend fun syncNotebook(notebook: Notebook)
+    suspend fun syncSection(section: Section)
+    suspend fun syncPage(page: Page)
+    suspend fun getAllSections(): List<Section>
+    suspend fun getAllPages(): List<Page>
 }

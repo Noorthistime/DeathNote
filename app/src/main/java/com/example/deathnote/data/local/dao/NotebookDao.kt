@@ -42,12 +42,18 @@ interface NotebookDao {
     @Query("SELECT * FROM sections WHERE id = :sectionId")
     suspend fun getSectionById(sectionId: String): SectionEntity?
 
+    @Query("SELECT * FROM sections")
+    suspend fun getAllSections(): List<SectionEntity>
+
     @Delete
     suspend fun deleteSection(section: SectionEntity)
 
     // Pages
     @Query("SELECT * FROM pages WHERE sectionId = :sectionId ORDER BY updatedAt DESC")
     fun getPagesBySection(sectionId: String): Flow<List<PageEntity>>
+
+    @Query("SELECT * FROM pages")
+    suspend fun getAllPages(): List<PageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPage(page: PageEntity)

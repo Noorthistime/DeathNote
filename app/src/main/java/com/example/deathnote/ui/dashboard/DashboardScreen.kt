@@ -19,7 +19,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
@@ -37,9 +39,8 @@ import com.example.deathnote.domain.model.JournalEntry
 import com.example.deathnote.domain.model.Notebook
 import com.example.deathnote.ui.journal.JournalViewModel
 import com.example.deathnote.ui.notebook.NotebookListScreen
-import com.example.deathnote.ui.theme.NoirPrimary
-import com.example.deathnote.ui.theme.NoirSurface
-import com.example.deathnote.ui.theme.NoirTextSecondary
+import androidx.compose.material.icons.filled.Palette
+import com.example.deathnote.ui.theme.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,12 +51,54 @@ fun DashboardScreen(
     onNavigateToJournal: (Long) -> Unit = {},
     onNavigateToSearch: () -> Unit = {},
     onCreateNotebook: () -> Unit = {},
-    onNotebookClick: (Notebook) -> Unit = {}
+    onNotebookClick: (Notebook) -> Unit = {},
+    onSignOut: () -> Unit = {}
 ) {
     val pagerState = rememberPagerState(pageCount = { 2 })
     val scope = rememberCoroutineScope()
     val journalViewModel: JournalViewModel = hiltViewModel()
+    val dashboardViewModel: DashboardViewModel = hiltViewModel()
     val entries by journalViewModel.allEntries.collectAsStateWithLifecycle()
+    var showColorDialog by remember { mutableStateOf(false) }
+
+    if (showColorDialog) {
+        AlertDialog(
+            onDismissRequest = { showColorDialog = false },
+            containerColor = NoirSurface,
+            title = { Text("SELECT_ACCENT", color = Color.White, style = MaterialTheme.typography.labelSmall) },
+            text = {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    val colors = listOf(
+                        ThemeOrange to "Orange",
+                        ThemeRed to "Red",
+                        ThemeBlue to "Blue",
+                        ThemeGreen to "Green",
+                        ThemeGrey to "Grey"
+                    )
+                    colors.forEach { (color, name) ->
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(color, CircleShape)
+                                .border(
+                                    if (DeathNoteThemeManager.currentAccentColor == color) 2.dp else 0.dp,
+                                    Color.White,
+                                    CircleShape
+                                )
+                                .clickable {
+                                    DeathNoteThemeManager.currentAccentColor = color
+                                    showColorDialog = false
+                                }
+                        )
+                    }
+                }
+            },
+            confirmButton = {}
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -65,15 +108,30 @@ fun DashboardScreen(
                         Text(
                             "DEATHNOTE",
                             style = MaterialTheme.typography.titleLarge.copy(
-                                color = NoirPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.ExtraBold,
                                 fontFamily = FontFamily.Serif
                             )
                         )
                     },
                     actions = {
+                        IconButton(onClick = { showColorDialog = true }) {
+                            Icon(Icons.Default.Palette, contentDescription = "Theme", tint = Color.White)
+                        }
+                        IconButton(onClick = { dashboardViewModel.syncNow() }) {
+                            Icon(Icons.Default.Sync, contentDescription = "Sync", tint = Color.White)
+                        }
                         IconButton(onClick = onNavigateToSearch) {
                             Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
+                        }
+                        IconButton(onClick = {
+                            dashboardViewModel.signOut(onSignOut)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.ExitToApp,
+                                contentDescription = "Sign Out",
+                                tint = Color.White
+                            )
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
@@ -81,11 +139,11 @@ fun DashboardScreen(
                 TabRow(
                     selectedTabIndex = pagerState.currentPage,
                     containerColor = Color.Black,
-                    contentColor = NoirPrimary,
+                    contentColor = MaterialTheme.colorScheme.primary,
                     indicator = { tabPositions ->
                         TabRowDefaults.SecondaryIndicator(
                             Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                            color = NoirPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     },
                     divider = {}
@@ -112,7 +170,7 @@ fun DashboardScreen(
                         onCreateNotebook()
                     }
                 },
-                containerColor = NoirPrimary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.White
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
@@ -232,14 +290,14 @@ fun JournalTab(entries: List<JournalEntry>, onDateSelected: (Long) -> Unit) {
                         Text(
                             text = String.format("%02d", day),
                             style = MaterialTheme.typography.titleLarge,
-                            color = if (hasEntry) NoirPrimary else Color.White,
+                            color = if (hasEntry) MaterialTheme.colorScheme.primary else Color.White,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text(dayOfWeek, style = MaterialTheme.typography.bodyLarge, color = Color.White)
                             if (hasEntry) {
-                                Text("Entry recorded", style = MaterialTheme.typography.labelSmall, color = NoirPrimary)
+                                Text("Entry recorded", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                             } else {
                                 Text("No entry", style = MaterialTheme.typography.labelSmall, color = NoirTextSecondary)
                             }
@@ -335,9 +393,9 @@ fun FunctionalCalendar(
                                                     onCalendarChange(newCal)
                                                     showMonthMenu = false
                                                 },
-                                                color = if (index == currentMonth) NoirPrimary else Color.Transparent,
+                                                color = if (index == currentMonth) MaterialTheme.colorScheme.primary else Color.Transparent,
                                                 shape = RoundedCornerShape(8.dp),
-                                                border = BorderStroke(1.dp, if (index == currentMonth) NoirPrimary else NoirSurface)
+                                                border = BorderStroke(1.dp, if (index == currentMonth) MaterialTheme.colorScheme.primary else NoirSurface)
                                             ) {
                                                 Text(
                                                     month,
@@ -353,7 +411,7 @@ fun FunctionalCalendar(
                             },
                             confirmButton = {
                                 TextButton(onClick = { showMonthMenu = false }) {
-                                    Text("CLOSE", color = NoirPrimary)
+                                    Text("CLOSE", color = MaterialTheme.colorScheme.primary)
                                 }
                             }
                         )
@@ -388,9 +446,9 @@ fun FunctionalCalendar(
                                                     onCalendarChange(newCal)
                                                     showYearMenu = false
                                                 },
-                                                color = if (year == currentYear) NoirPrimary else Color.Transparent,
+                                                color = if (year == currentYear) MaterialTheme.colorScheme.primary else Color.Transparent,
                                                 shape = RoundedCornerShape(8.dp),
-                                                border = BorderStroke(1.dp, if (year == currentYear) NoirPrimary else NoirSurface)
+                                                border = BorderStroke(1.dp, if (year == currentYear) MaterialTheme.colorScheme.primary else NoirSurface)
                                             ) {
                                                 Text(
                                                     year.toString(),
@@ -405,7 +463,7 @@ fun FunctionalCalendar(
                             },
                             confirmButton = {
                                 TextButton(onClick = { showYearMenu = false }) {
-                                    Text("CLOSE", color = NoirPrimary)
+                                    Text("CLOSE", color = MaterialTheme.colorScheme.primary)
                                 }
                             }
                         )
@@ -472,12 +530,12 @@ fun FunctionalCalendar(
                                 modifier = Modifier
                                     .size(40.dp)
                                     .background(
-                                        if (isToday) NoirPrimary.copy(alpha = 0.2f) else Color.Transparent,
+                                        if (isToday) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else Color.Transparent,
                                         CircleShape
                                     )
                                     .border(
                                         if (isToday) 1.dp else 0.dp,
-                                        if (isToday) NoirPrimary else Color.Transparent,
+                                        if (isToday) MaterialTheme.colorScheme.primary else Color.Transparent,
                                         CircleShape
                                     )
                                     .clickable {
@@ -488,7 +546,7 @@ fun FunctionalCalendar(
                                 Text(
                                     day.toString(),
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = if (hasEntry) NoirPrimary else Color.White,
+                                    color = if (hasEntry) MaterialTheme.colorScheme.primary else Color.White,
                                     fontWeight = if (isToday || hasEntry) FontWeight.Bold else FontWeight.Normal
                                 )
                             }

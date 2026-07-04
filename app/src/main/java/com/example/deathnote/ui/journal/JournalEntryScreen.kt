@@ -28,7 +28,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.deathnote.ui.theme.NoirPrimary
 import com.example.deathnote.ui.theme.NoirTextPrimary
 import com.example.deathnote.ui.theme.NoirTextSecondary
 import java.text.SimpleDateFormat
@@ -80,7 +79,7 @@ fun JournalEntryScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("DEATHNOTE", style = MaterialTheme.typography.titleLarge, color = NoirPrimary, fontWeight = FontWeight.Bold) },
+                title = { Text("DEATHNOTE", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
@@ -101,7 +100,7 @@ fun JournalEntryScreen(
                 .padding(16.dp)
         ) {
             Text(dateStr, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = Color.White)
-            Text(dayStr, style = MaterialTheme.typography.bodyLarge, color = NoirPrimary)
+            Text(dayStr, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -148,7 +147,7 @@ fun JournalEntryScreen(
                 value = entry?.content ?: "",
                 onValueChange = { viewModel.updateEntry(content = it) },
                 textStyle = MaterialTheme.typography.bodyLarge.copy(color = NoirTextPrimary),
-                cursorBrush = SolidColor(NoirPrimary),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 200.dp),
@@ -282,7 +281,7 @@ fun TimeEditorField(
                 }
             },
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = NoirTextPrimary),
-            cursorBrush = SolidColor(NoirPrimary),
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
                 imeAction = imeAction, 
@@ -323,7 +322,7 @@ fun AmPmToggle(selected: String, onSelected: (String) -> Unit) {
             "AM",
             modifier = Modifier
                 .clickable { onSelected("AM") }
-                .background(if (selected == "AM") NoirPrimary else Color.Transparent)
+                .background(if (selected == "AM") MaterialTheme.colorScheme.primary else Color.Transparent)
                 .padding(horizontal = 8.dp, vertical = 2.dp),
             color = if (selected == "AM") Color.White else NoirTextSecondary,
             style = MaterialTheme.typography.labelSmall
@@ -333,7 +332,7 @@ fun AmPmToggle(selected: String, onSelected: (String) -> Unit) {
             "PM",
             modifier = Modifier
                 .clickable { onSelected("PM") }
-                .background(if (selected == "PM") NoirPrimary else Color.Transparent)
+                .background(if (selected == "PM") MaterialTheme.colorScheme.primary else Color.Transparent)
                 .padding(horizontal = 8.dp, vertical = 2.dp),
             color = if (selected == "PM") Color.White else NoirTextSecondary,
             style = MaterialTheme.typography.labelSmall
@@ -358,7 +357,7 @@ fun EditorField(
             value = value,
             onValueChange = onValueChange,
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = NoirTextPrimary),
-            cursorBrush = SolidColor(NoirPrimary),
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = imeAction),
             keyboardActions = KeyboardActions(onAny = { onNext() }),

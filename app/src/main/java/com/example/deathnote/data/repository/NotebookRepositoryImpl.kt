@@ -125,4 +125,41 @@ class NotebookRepositoryImpl @Inject constructor(
     override suspend fun searchPages(query: String): List<Page> {
         return dao.searchPages(query).map { it.toDomain() }
     }
+
+    override suspend fun syncNotebook(notebook: Notebook) {
+        dao.insertNotebook(NotebookEntity(
+            id = notebook.id,
+            userId = notebook.userId,
+            name = notebook.name,
+            isLocked = notebook.isLocked,
+            passwordHash = notebook.passwordHash,
+            createdAt = notebook.createdAt
+        ))
+    }
+
+    override suspend fun syncSection(section: Section) {
+        dao.insertSection(SectionEntity(
+            id = section.id,
+            notebookId = section.notebookId,
+            name = section.name
+        ))
+    }
+
+    override suspend fun syncPage(page: Page) {
+        dao.insertPage(PageEntity(
+            id = page.id,
+            sectionId = page.sectionId,
+            title = page.title,
+            content = page.content,
+            updatedAt = page.updatedAt
+        ))
+    }
+
+    override suspend fun getAllSections(): List<Section> {
+        return dao.getAllSections().map { it.toDomain() }
+    }
+
+    override suspend fun getAllPages(): List<Page> {
+        return dao.getAllPages().map { it.toDomain() }
+    }
 }

@@ -115,7 +115,7 @@ fun NotebookListScreen(
                         viewModel.updateNotebook(notebookToEdit!!.copy(name = renameText))
                         showRenameDialog = false
                     }
-                }) { Text("SAVE", color = NoirPrimary) }
+                }) { Text("SAVE", color = MaterialTheme.colorScheme.primary) }
             },
             dismissButton = {
                 TextButton(onClick = { showRenameDialog = false }) { Text("CANCEL") }
@@ -138,7 +138,7 @@ fun NotebookCard(notebook: Notebook, onClick: (Notebook) -> Unit, onRename: () -
             Icon(
                 if (notebook.isLocked) Icons.Default.Lock else Icons.Default.Folder,
                 contentDescription = null,
-                tint = if (notebook.isLocked) NoirPrimary else NoirTextSecondary,
+                tint = if (notebook.isLocked) MaterialTheme.colorScheme.primary else NoirTextSecondary,
                 modifier = Modifier.size(32.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -163,7 +163,7 @@ fun NotebookCard(notebook: Notebook, onClick: (Notebook) -> Unit, onRename: () -
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Delete", color = NoirPrimary) },
+                        text = { Text("Delete", color = MaterialTheme.colorScheme.primary) },
                         onClick = {
                             showMenu = false
                             onDelete()

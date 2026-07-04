@@ -8,4 +8,5 @@ interface JournalRepository {
     suspend fun getEntryByDate(date: Long): JournalEntry?
     suspend fun saveEntry(entry: JournalEntry)
     suspend fun searchEntries(query: String): List<JournalEntry>
+    suspend fun syncEntry(entry: JournalEntry)
 }

@@ -32,4 +32,8 @@ class JournalRepositoryImpl @Inject constructor(
     override suspend fun searchEntries(query: String): List<JournalEntry> {
         return dao.searchEntries(query).map { it.toDomain() }
     }
+
+    override suspend fun syncEntry(entry: JournalEntry) {
+        dao.insertEntry(entry.toEntity())
+    }
 }

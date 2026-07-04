@@ -80,7 +80,7 @@ fun SecurityScreen(
             Text(
                 "DEATHNOTE",
                 style = MaterialTheme.typography.titleLarge,
-                color = NoirPrimary,
+                color = MaterialTheme.colorScheme.primary,
                 letterSpacing = 4.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -115,7 +115,7 @@ fun SecurityScreen(
                         unfocusedContainerColor = Color.Transparent,
                         focusedContainerColor = Color.Transparent,
                         unfocusedBorderColor = NoirTextSecondary.copy(alpha = 0.3f),
-                        focusedBorderColor = NoirPrimary
+                        focusedBorderColor = MaterialTheme.colorScheme.primary
                     )
                 )
                 Spacer(modifier = Modifier.height(16.dp))

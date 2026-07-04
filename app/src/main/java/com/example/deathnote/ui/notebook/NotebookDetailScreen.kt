@@ -218,7 +218,7 @@ fun NotebookDetailScreen(
                             newSectionName = ""
                             showAddSectionDialog = false
                         }
-                    }) { Text("CREATE", color = NoirPrimary) }
+                    }) { Text("CREATE", color = MaterialTheme.colorScheme.primary) }
                 },
                 dismissButton = {
                     TextButton(onClick = { showAddSectionDialog = false }) { Text("CANCEL") }
@@ -247,7 +247,7 @@ fun NotebookDetailScreen(
                             viewModel.updateSection(sectionToEdit!!.copy(name = editSectionName))
                             showEditSectionDialog = false
                         }
-                    }) { Text("SAVE", color = NoirPrimary) }
+                    }) { Text("SAVE", color = MaterialTheme.colorScheme.primary) }
                 },
                 dismissButton = {
                     TextButton(onClick = { showEditSectionDialog = false }) { Text("CANCEL") }
@@ -291,7 +291,7 @@ fun SectionWithPages(
                     viewModel.addPage(section.id, "Page - ${pages.size + 1}")
                     expanded = true
                 }) {
-                    Icon(Icons.Default.NoteAdd, contentDescription = "Quick Add Page", tint = NoirPrimary)
+                    Icon(Icons.Default.NoteAdd, contentDescription = "Quick Add Page", tint = MaterialTheme.colorScheme.primary)
                 }
                 Box {
                     IconButton(onClick = { showMenu = true }) {
@@ -318,7 +318,7 @@ fun SectionWithPages(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text("Delete Section", color = NoirPrimary) },
+                            text = { Text("Delete Section", color = MaterialTheme.colorScheme.primary) },
                             onClick = {
                                 showMenu = false
                                 onDeleteSection()
@@ -329,7 +329,7 @@ fun SectionWithPages(
                 Icon(
                     if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
                     contentDescription = null,
-                    tint = NoirPrimary
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -418,7 +418,7 @@ fun PageItem(
                         modifier = Modifier.background(NoirSurface)
                     ) {
                         DropdownMenuItem(
-                            text = { Text("Delete Page", color = NoirPrimary) },
+                            text = { Text("Delete Page", color = MaterialTheme.colorScheme.primary) },
                             onClick = {
                                 showMenu = false
                                 onDelete()

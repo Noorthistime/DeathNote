@@ -16,6 +16,16 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
+
+object DeathNoteThemeManager {
+    var currentAccentColor by mutableStateOf(ThemeOrange)
+}
+
+val LocalAccentColor = staticCompositionLocalOf { ThemeOrange }
 
 private val DarkColorScheme = darkColorScheme(
     primary = NoirPrimary,
@@ -43,7 +53,16 @@ fun DeathNoteTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = DarkColorScheme
+    val accentColor = DeathNoteThemeManager.currentAccentColor
+    val colorScheme = darkColorScheme(
+        primary = accentColor,
+        onPrimary = NoirOnPrimary,
+        background = NoirBackground,
+        surface = NoirSurface,
+        onBackground = NoirTextPrimary,
+        onSurface = NoirTextPrimary,
+        secondary = NoirTextSecondary
+    )
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -59,8 +78,12 @@ fun DeathNoteTheme(
         colorScheme = colorScheme,
         typography = Typography,
         content = {
-            Surface(color = Color.Black) {
-                content()
+            androidx.compose.runtime.CompositionLocalProvider(
+                LocalAccentColor provides accentColor
+            ) {
+                Surface(color = Color.Black) {
+                    content()
+                }
             }
         }
     )

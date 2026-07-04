@@ -9,6 +9,13 @@ val NoirOnPrimary = Color(0xFFFFFFFF)
 val NoirTextPrimary = Color(0xFFFFFFFF)
 val NoirTextSecondary = Color(0xFFBCAAA4)
 
+// Theme Colors
+val ThemeRed = Color(0xFFFF0031)
+val ThemeBlue = Color(0xFF42A5F5)
+val ThemeGreen = Color(0xFF4CAF50)
+val ThemeGrey = Color(0xFF9E9E9E)
+val ThemeOrange = Color(0xFFFF5722) // Current NoirPrimary
+
 val LightBackground = Color(0xFFF5F5F5)
 val LightSurface = Color(0xFFFFFFFF)
 val LightPrimary = Color(0xFFD32F2F)

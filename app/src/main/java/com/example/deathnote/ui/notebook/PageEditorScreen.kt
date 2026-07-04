@@ -88,7 +88,7 @@ fun PageEditorScreen(
                             Text(
                                 text = notebookName.uppercase(),
                                 style = MaterialTheme.typography.labelMedium,
-                                color = NoirPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.clickable { onNotebookClick(notebookId) }
                             )
@@ -134,7 +134,7 @@ fun PageEditorScreen(
                 ),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                cursorBrush = SolidColor(NoirPrimary),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                 modifier = Modifier.fillMaxWidth(),
                 decorationBox = { innerTextField ->
                     if (title.isEmpty()) {
@@ -159,7 +159,7 @@ fun PageEditorScreen(
                     fontSize = 18.sp,
                     lineHeight = 28.sp
                 ),
-                cursorBrush = SolidColor(NoirPrimary),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                 modifier = Modifier.fillMaxSize(),
                 decorationBox = { innerTextField ->
                     if (content.isEmpty()) {
