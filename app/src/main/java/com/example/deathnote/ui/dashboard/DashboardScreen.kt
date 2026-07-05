@@ -39,7 +39,7 @@ import com.example.deathnote.domain.model.JournalEntry
 import com.example.deathnote.domain.model.Notebook
 import com.example.deathnote.ui.journal.JournalViewModel
 import com.example.deathnote.ui.notebook.NotebookListScreen
-import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.ColorLens
 import com.example.deathnote.ui.theme.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -65,7 +65,7 @@ fun DashboardScreen(
         AlertDialog(
             onDismissRequest = { showColorDialog = false },
             containerColor = NoirSurface,
-            title = { Text("SELECT_ACCENT", color = Color.White, style = MaterialTheme.typography.labelSmall) },
+            title = { Text("Select the Accent", color = Color.White, style = MaterialTheme.typography.labelSmall) },
             text = {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
@@ -116,7 +116,7 @@ fun DashboardScreen(
                     },
                     actions = {
                         IconButton(onClick = { showColorDialog = true }) {
-                            Icon(Icons.Default.Palette, contentDescription = "Theme", tint = Color.White)
+                            Icon(Icons.Default.ColorLens, contentDescription = "Theme", tint = Color.White)
                         }
                         IconButton(onClick = { dashboardViewModel.syncNow() }) {
                             Icon(Icons.Default.Sync, contentDescription = "Sync", tint = Color.White)

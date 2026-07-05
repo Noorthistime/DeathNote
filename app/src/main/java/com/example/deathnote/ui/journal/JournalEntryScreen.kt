@@ -263,13 +263,12 @@ fun TimeEditorField(
         BasicTextField(
             value = digits,
             onValueChange = { input ->
-                val hasSpace = input.contains(" ")
+                val hasSeparator = input.any { it == ':' || it == ' ' || it == '.' || it == ',' }
                 val digitsOnly = input.filter { it.isDigit() }.take(4)
                 
                 var newDigits = digitsOnly
-                if (hasSpace && digitsOnly.length < 2) {
-                    // Pad single digit or empty with 0s when space is pressed
-                    newDigits = digitsOnly.padStart(2, '0')
+                if (hasSeparator && digitsOnly.length == 1) {
+                    newDigits = "0" + digitsOnly
                 }
                 
                 if (newDigits.length <= 4) {
